@@ -246,8 +246,10 @@ app.get('/admin', (req, res) => {
 
 <div id="admin-screen" style="display:none">
   <div class="container">
+    <!-- STATS -->
     <div class="stats" id="stats-row"></div>
 
+    <!-- USER TABLE -->
     <div class="card">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
         <h3>👥 Danh Sách User</h3>
@@ -264,6 +266,7 @@ app.get('/admin', (req, res) => {
       </div>
     </div>
 
+    <!-- HISTORY -->
     <div class="card" id="history-card" style="display:none">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
         <h3 id="history-title">📋 Lịch Sử</h3>
@@ -279,6 +282,7 @@ app.get('/admin', (req, res) => {
   </div>
 </div>
 
+<!-- MODAL CHỈNH SỐ DƯ -->
 <div class="modal-bg" id="modal-adjust">
   <div class="modal">
     <h3>💰 Chỉnh Số Dư - <span id="modal-username"></span></h3>
@@ -760,11 +764,16 @@ const HTML = `<!DOCTYPE html>
   /* ===== TOAST ===== */
   .toast {
     position: fixed; top: 70px; left: 50%; transform: translateX(-50%);
-    background: var(--card); border: 1px solid rgba(255,255,255,0.15);
-    border-radius: 12px; padding: 12px 24px;
-    font-weight: 800; font-size: 15px; z-index: 999;
+    background: var(--card);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 12px;
+    padding: 12px 24px;
+    font-weight: 800;
+    font-size: 15px;
+    z-index: 999;
     animation: toastIn 0.3s ease, toastOut 0.3s ease 2.2s forwards;
-    white-space: nowrap; box-shadow: 0 8px 30px rgba(0,0,0,0.5);
+    white-space: nowrap;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.5);
   }
   .toast.win { border-color: var(--green); color: var(--green); }
   .toast.lose { border-color: var(--red); color: #ff6666; }
@@ -774,8 +783,13 @@ const HTML = `<!DOCTYPE html>
 
   /* ===== HISTORY ===== */
   .history-item {
-    background: var(--card2); border-radius: 12px; padding: 12px 16px; margin-bottom: 8px;
-    display: flex; align-items: center; justify-content: space-between;
+    background: var(--card2);
+    border-radius: 12px;
+    padding: 12px 16px;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     border-left: 4px solid transparent;
   }
   .history-item.win { border-left-color: var(--green); }
@@ -789,701 +803,1072 @@ const HTML = `<!DOCTYPE html>
 
   /* ===== AIRPLANE GAME ===== */
   .plane-multiplier {
-    text-align: center; font-size: 64px; font-weight: 900; color: var(--gold2);
-    text-shadow: 0 0 30px rgba(255,215,0,0.6); margin: 16px 0;
+    text-align: center;
+    font-size: 64px; font-weight: 900;
+    color: var(--gold2);
+    text-shadow: 0 0 30px rgba(255,215,0,0.6);
+    margin: 16px 0;
     transition: color 0.3s;
   }
   .plane-multiplier.danger { color: #ff4444; text-shadow: 0 0 30px rgba(255,68,68,0.6); }
+
   .plane-graph {
-    background: rgba(0,0,0,0.4); border-radius: 16px; height: 160px; margin-bottom: 16px;
-    position: relative; overflow: hidden; border: 1px solid rgba(255,255,255,0.05);
+    background: rgba(0,0,0,0.4);
+    border-radius: 16px;
+    height: 160px;
+    margin-bottom: 16px;
+    position: relative;
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.05);
   }
-  .plane-emoji { position: absolute; font-size: 32px; transition: all 0.5s ease; filter: drop-shadow(0 0 10px rgba(255,215,0,0.8)); }
-  .plane-trail { position: absolute; bottom: 0; left: 0; width: 0%; height: 2px; background: linear-gradient(90deg, transparent, var(--gold2)); transition: width 0.5s; }
-  .plane-crashed { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 48px; background: rgba(255,0,0,0.1); border-radius: 16px; animation: flashRed 0.5s; }
-  @keyframes flashRed { 0% { background: rgba(255,0,0,0.5); } 100% { background: rgba(255,0,0,0.1); } }
-  .plane-status { text-align: center; font-size: 14px; font-weight: 700; color: var(--muted); margin-bottom: 16px; min-height: 20px; }
+  .plane-emoji {
+    position: absolute;
+    font-size: 32px;
+    transition: all 0.5s ease;
+    filter: drop-shadow(0 0 10px rgba(255,215,0,0.8));
+  }
+  .plane-trail {
+    position: absolute;
+    bottom: 0; left: 0;
+    width: 0%; height: 2px;
+    background: linear-gradient(90deg, transparent, var(--gold2));
+    transition: width 0.5s;
+  }
+  .plane-crashed {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 48px;
+    background: rgba(255,0,0,0.1);
+    border-radius: 16px;
+    animation: flashRed 0.5s;
+  }
+  @keyframes flashRed {
+    0% { background: rgba(255,0,0,0.5); }
+    100% { background: rgba(255,0,0,0.1); }
+  }
+
+  .plane-status {
+    text-align: center; font-size: 14px;
+    font-weight: 700; color: var(--muted);
+    margin-bottom: 16px;
+    min-height: 20px;
+  }
 
   /* ===== PARACHUTE ===== */
   .parachute-area {
     position: relative;
     background: linear-gradient(180deg, #0a1628 0%, #1a3a6e 50%, #2d6a4f 100%);
-    border-radius: 20px; height: 240px; overflow: hidden; margin-bottom: 16px;
+    border-radius: 20px;
+    height: 240px;
+    overflow: hidden;
+    margin-bottom: 16px;
   }
-  .sky-stars { position: absolute; inset: 0; overflow: hidden; }
+  .sky-stars {
+    position: absolute; inset: 0;
+    overflow: hidden;
+  }
   .star { position: absolute; background: white; border-radius: 50%; animation: twinkle 2s infinite alternate; }
   @keyframes twinkle { from { opacity: 0.3; } to { opacity: 1; } }
-  .parachute-jumper { position: absolute; left: 50%; transform: translateX(-50%); font-size: 44px; filter: drop-shadow(0 4px 8px rgba(0,0,0,0.5)); transition: bottom 0.4s ease; }
-  .parachute-ground { position: absolute; bottom: 0; left: 0; width: 100%; height: 30px; background: #2d6a4f; border-top: 4px solid #40916c; }
-  .parachute-height { position: absolute; top: 12px; right: 12px; background: rgba(0,0,0,0.5); border-radius: 8px; padding: 4px 10px; font-weight: 800; font-size: 13px; color: var(--gold2); border: 1px solid rgba(255,215,0,0.2); }
-  .parachute-instructions { background: var(--card2); border-radius: 14px; padding: 12px; font-size: 12px; color: var(--muted); line-height: 1.5; margin-bottom: 16px; border: 1px solid rgba(255,255,255,0.04); }
 
-  /* ===== WHEEL GAME ===== */
-  .wheel-wrapper { position: relative; width: 240px; height: 240px; margin: 20px auto; }
-  .wheel-pointer { position: absolute; top: -10px; left: 50%; transform: translateX(-50%); font-size: 28px; z-index: 10; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5)); }
-  .wheel-canvas { width: 100%; height: 100%; border-radius: 50%; box-shadow: 0 6px 25px rgba(0,0,0,0.6); border: 6px solid #1e1e2a; transition: transform 4s cubic-bezier(0.1, 0.8, 0.25, 1); }
+  .parachute-jumper {
+    position: absolute;
+    left: 50%; transform: translateX(-50%);
+    font-size: 36px;
+    transition: top 0.8s ease-in;
+    filter: drop-shadow(0 0 8px rgba(255,255,255,0.5));
+  }
+  .ground-line {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    height: 40px;
+    background: linear-gradient(180deg, #2d6a4f, #1b4332);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px;
+  }
+
+  .parachute-multiplier {
+    text-align: center;
+    font-size: 48px; font-weight: 900;
+    color: var(--gold2);
+    margin: 12px 0;
+    text-shadow: 0 0 20px rgba(255,215,0,0.5);
+  }
+
+  /* ===== WALLET MODAL ===== */
+  .bank-info {
+    background: linear-gradient(135deg, #1a1a2e, #16213e);
+    border-radius: 16px;
+    padding: 16px;
+    margin-bottom: 16px;
+    border: 1px solid rgba(255,255,255,0.1);
+  }
+  .bank-info .bank-name {
+    font-size: 12px; color: var(--muted); margin-bottom: 6px;
+  }
+  .bank-info .bank-account {
+    font-size: 22px; font-weight: 900; color: var(--gold2);
+    letter-spacing: 2px;
+  }
+  .bank-info .bank-holder {
+    font-size: 13px; color: rgba(255,255,255,0.7); margin-top: 4px;
+  }
+  .bank-info .bank-type {
+    display: inline-block;
+    background: var(--red);
+    font-size: 11px; font-weight: 800;
+    padding: 2px 10px; border-radius: 20px;
+    margin-top: 8px;
+  }
+
+  .profile-row {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 14px 16px;
+    background: var(--card2);
+    border-radius: 12px;
+    margin-bottom: 8px;
+    border: 1px solid rgba(255,255,255,0.06);
+  }
+  .profile-row .pr-label { font-size: 13px; color: var(--muted); }
+  .profile-row .pr-value { font-size: 14px; font-weight: 800; }
+
+  /* Bet amount row */
+  .bet-row {
+    display: flex; align-items: center; gap: 10px;
+    margin-bottom: 16px;
+  }
+  .bet-row label { font-size: 13px; color: var(--muted); white-space: nowrap; }
+  .bet-row input {
+    background: var(--card2);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 10px;
+    color: white;
+    padding: 10px 14px;
+    font-size: 16px; font-weight: 800;
+    width: 100%; font-family: inherit;
+    outline: none;
+  }
+
+  .result-box {
+    text-align: center;
+    padding: 16px;
+    border-radius: 14px;
+    margin-bottom: 16px;
+    font-size: 22px; font-weight: 900;
+    display: none;
+  }
+  .result-box.show { display: block; animation: popIn 0.4s ease; }
+  .result-box.win-result { background: rgba(0,200,81,0.15); color: var(--green); border: 2px solid var(--green); }
+  .result-box.lose-result { background: rgba(208,2,27,0.15); color: #ff6666; border: 2px solid #ff6666; }
+  @keyframes popIn {
+    0% { transform: scale(0.8); opacity: 0; }
+    60% { transform: scale(1.1); }
+    100% { transform: scale(1); opacity: 1; }
+  }
+
+  .tab-buttons {
+    display: flex; gap: 8px; margin-bottom: 16px;
+  }
+  .tab-btn {
+    flex: 1; padding: 10px;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 10px;
+    color: var(--muted); font-size: 14px; font-weight: 700;
+    cursor: pointer; transition: all 0.2s;
+    font-family: inherit;
+  }
+  .tab-btn.active { background: var(--red); color: white; border-color: var(--red); }
+
+  .empty-state {
+    text-align: center; padding: 40px 20px;
+    color: var(--muted); font-size: 14px;
+  }
+  .empty-state .es-icon { font-size: 48px; margin-bottom: 12px; }
 </style>
 </head>
 <body>
+
+<!-- TOP BAR -->
 <div class="topbar">
-  <div class="topbar-logo">🏦 MB <span>Game</span></div>
-  <div style="display:flex;align-items:center;gap:10px">
-    <div class="balance-display" id="nav-balance">₫0</div>
-    <div class="user-avatar" id="nav-avatar">T</div>
-  </div>
+  <div class="topbar-logo">⭐ <span>MB</span>Game</div>
+  <div class="balance-display" id="top-balance">₫0</div>
+  <div class="user-avatar">LT</div>
 </div>
 
+<!-- PAGES -->
+
+<!-- HOME -->
 <div class="page active" id="page-home">
   <div class="banner">
-    <p>Chào mừng quay trở lại,</p>
-    <h2 id="home-username">Lê Thanh Tùng</h2>
+    <p style="font-size:12px;opacity:0.7">Số dư khả dụng</p>
     <div class="balance-big" id="home-balance">₫0</div>
-    <p style="opacity:0.6;font-size:11px" id="home-uid">Mã tài khoản: LT001</p>
+    <h2>Chào Lê Thanh Tùng 👋</h2>
+    <p>0971918513 · MB Bank</p>
   </div>
 
   <div class="wallet-actions">
-    <div class="wallet-btn deposit" onclick="openModal('modal-deposit')">
-      <div class="wb-icon">🏦</div>
-      <div class="wb-label">Nạp Tiền</div>
+    <div class="wallet-btn deposit" onclick="openDeposit()">
+      <div class="wb-icon">💰</div>
+      <div class="wb-label" style="color:var(--green)">Nạp Tiền</div>
     </div>
-    <div class="wallet-btn withdraw" onclick="openModal('modal-withdraw')">
+    <div class="wallet-btn withdraw" onclick="openWithdraw()">
       <div class="wb-icon">🏧</div>
-      <div class="wb-label">Rút Tiền</div>
+      <div class="wb-label" style="color:var(--gold)">Rút Tiền</div>
     </div>
   </div>
 
-  <div class="section-title">Trò Chơi Siêu Tốc</div>
+  <div class="section-title">🎮 Chọn Trò Chơi</div>
   <div class="games-grid">
-    <div class="game-card hot" onclick="switchPage('taixiu')">
+    <div class="game-card hot" onclick="navigate('txpage')">
       <span class="gc-icon">🎲</span>
-      <div class="gc-name">Tài Xỉu 60s</div>
-      <div class="gc-desc">Truyền thống, xanh chín</div>
+      <div class="gc-name">Tài Xỉu</div>
+      <div class="gc-desc">Đổ 3 xúc xắc</div>
     </div>
-    <div class="game-card hot" onclick="switchPage('airplane')">
-      <span class="gc-icon">🚀</span>
-      <div class="gc-name">Phi Cơ Nhảy Dù</div>
-      <div class="gc-desc">Càng bay cao x càng to</div>
+    <div class="game-card new" onclick="navigate('planepage')">
+      <span class="gc-icon">✈️</span>
+      <div class="gc-name">Máy Bay</div>
+      <div class="gc-desc">Crash game x100</div>
     </div>
-    <div class="game-card new" onclick="switchPage('parachute')">
+    <div class="game-card new" onclick="navigate('chupage')">
       <span class="gc-icon">🪂</span>
-      <div class="gc-name">Căn Cánh Nhảy Dù</div>
-      <div class="gc-desc">Đáp đất an toàn nhận thưởng</div>
+      <div class="gc-name">Nhảy Dù</div>
+      <div class="gc-desc">Dừng đúng lúc!</div>
     </div>
-    <div class="game-card" onclick="switchPage('wheel')">
-      <span class="gc-icon">🎡</span>
-      <div class="gc-name">Vòng Quay May Mắn</div>
-      <div class="gc-desc">Thử vận may, 100% trúng</div>
+    <div class="game-card" onclick="navigate('historypage')">
+      <span class="gc-icon">📋</span>
+      <div class="gc-name">Lịch Sử</div>
+      <div class="gc-desc">Xem kết quả cũ</div>
     </div>
   </div>
-</div>
 
-<div class="page" id="page-taixiu">
-  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
-    <div class="section-title" style="margin:0">🎲 Trò chơi Tài Xỉu</div>
-    <button class="qa-btn" style="padding:4px 10px;font-size:12px" onclick="switchPage('home')">↩ Quay lại</button>
-  </div>
-  <div class="game-area">
-    <div id="tx-dice-view">
-      <div class="dice-container">
-        <div class="die" id="die1">⚀</div>
-        <div class="die" id="die2">⚄</div>
-        <div class="die" id="die3">⚃</div>
-      </div>
-      <div id="tx-result-box" style="text-align:center; min-height:80px">
-        <div class="dice-total" id="tx-total">10</div>
-        <div class="dice-result-label xiu" id="tx-label">XỈU</div>
-      </div>
+  <div class="section-title">📊 Thống Kê Hôm Nay</div>
+  <div style="background:var(--card2);border-radius:16px;padding:16px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;text-align:center">
+    <div>
+      <div style="font-size:22px;font-weight:900;color:var(--green)" id="stat-wins">0</div>
+      <div style="font-size:11px;color:var(--muted)">Thắng</div>
     </div>
-
-    <div style="margin-top:24px">
-      <div class="bet-choices">
-        <div class="bet-choice tai-btn" id="btn-choice-tai" onclick="selectBet('tai')">TÀI<br><span style="font-size:11px;opacity:0.6;font-weight:600">x1.98 (11-17)</span></div>
-        <div class="bet-choice xiu-btn" id="btn-choice-xiu" onclick="selectBet('xiu')">XỈU<br><span style="font-size:11px;opacity:0.6;font-weight:600">x1.98 (4-10)</span></div>
-      </div>
-
-      <div class="amount-input-group">
-        <span>₫</span>
-        <input type="number" id="tx-amount" placeholder="Nhập số tiền cược" min="1000" value="10000">
-      </div>
-      <div class="quick-amounts">
-        <button class="qa-btn" onclick="setTxAmt(10000)">10K</button>
-        <button class="qa-btn" onclick="setTxAmt(50000)">50K</button>
-        <button class="qa-btn" onclick="setTxAmt(100000)">100K</button>
-        <button class="qa-btn" onclick="setTxAmt(500000)">500K</button>
-        <button class="qa-btn" onclick="setTxAmt(state.balance)">Tất tay</button>
-      </div>
-
-      <button class="btn-primary" id="tx-submit" onclick="playTaiXiu()">🎲 Đặt Cược</button>
+    <div>
+      <div style="font-size:22px;font-weight:900;color:#ff6666" id="stat-losses">0</div>
+      <div style="font-size:11px;color:var(--muted)">Thua</div>
+    </div>
+    <div>
+      <div style="font-size:22px;font-weight:900;color:var(--gold2)" id="stat-profit">₫0</div>
+      <div style="font-size:11px;color:var(--muted)">Lợi nhuận</div>
     </div>
   </div>
 </div>
 
-<div class="page" id="page-airplane">
-  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
-    <div class="section-title" style="margin:0">🚀 Phi Cơ Nhảy Dù (Crash)</div>
-    <button class="qa-btn" style="padding:4px 10px;font-size:12px" onclick="switchPage('home')">↩ Quay lại</button>
+<!-- TAI XIU PAGE -->
+<div class="page" id="page-txpage">
+  <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px">
+    <button onclick="navigate('home')" style="background:none;border:none;color:white;font-size:22px;cursor:pointer">←</button>
+    <h2 style="font-size:18px;font-weight:900">🎲 Tài Xỉu</h2>
   </div>
+
   <div class="game-area">
-    <div class="plane-graph" id="plane-screen">
+    <div style="text-align:center;margin-bottom:8px;color:var(--muted);font-size:13px">Kết Quả</div>
+    <div class="dice-container" id="dice-display">
+      <div class="die" id="die1">🎲</div>
+      <div class="die" id="die2">🎲</div>
+      <div class="die" id="die3">🎲</div>
+    </div>
+    <div style="text-align:center">
+      <div class="dice-total" id="dice-total" style="display:none">0</div>
+      <div style="display:flex;justify-content:center">
+        <div class="dice-result-label" id="tx-result-label" style="display:none">TAI</div>
+      </div>
+    </div>
+    <div class="result-box" id="tx-outcome-box"></div>
+  </div>
+
+  <div class="section-title">Đặt Cược</div>
+  <div class="bet-row">
+    <label>Số tiền:</label>
+    <input type="number" id="tx-bet-amount" placeholder="10,000" min="1000" step="1000" value="10000">
+  </div>
+  <div class="quick-amounts">
+    <button class="qa-btn" onclick="setBet('tx',10000)">10K</button>
+    <button class="qa-btn" onclick="setBet('tx',50000)">50K</button>
+    <button class="qa-btn" onclick="setBet('tx',100000)">100K</button>
+    <button class="qa-btn" onclick="setBet('tx',500000)">500K</button>
+  </div>
+
+  <div class="bet-choices">
+    <div class="bet-choice tai-btn" id="tx-tai" onclick="selectTX('tai')">
+      🔴 TÀI<br><span style="font-size:12px;font-weight:600">11 - 18</span>
+    </div>
+    <div class="bet-choice xiu-btn" id="tx-xiu" onclick="selectTX('xiu')">
+      🔵 XỈU<br><span style="font-size:12px;font-weight:600">3 - 10</span>
+    </div>
+  </div>
+
+  <button class="btn-primary" id="tx-roll-btn" onclick="rollTX()">🎲 LẮC XÚC XẮC</button>
+</div>
+
+<!-- PLANE GAME PAGE -->
+<div class="page" id="page-planepage">
+  <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px">
+    <button onclick="navigate('home')" style="background:none;border:none;color:white;font-size:22px;cursor:pointer">←</button>
+    <h2 style="font-size:18px;font-weight:900">✈️ Máy Bay</h2>
+  </div>
+
+  <div class="game-area">
+    <div class="plane-graph" id="plane-graph">
       <div class="sky-stars" id="plane-stars"></div>
       <div class="plane-trail" id="plane-trail"></div>
-      <div class="plane-emoji" id="plane-jumper" style="bottom:10px; left:10px;">🚀</div>
-      <div id="plane-crash-overlay"></div>
+      <div class="plane-emoji" id="plane-emoji" style="bottom:20px;left:20px">✈️</div>
+      <div class="plane-crashed" id="plane-crashed" style="display:none">💥</div>
     </div>
-    <div class="plane-multiplier" id="plane-mult">1.00x</div>
-    <div class="plane-status" id="plane-status">Sẵn sàng cất cánh</div>
+    <div class="plane-multiplier" id="plane-mult">1.00×</div>
+    <div class="plane-status" id="plane-status">Đặt cược và bắt đầu bay!</div>
+  </div>
 
-    <div id="plane-controls">
-      <div class="amount-input-group">
-        <span>₫</span>
-        <input type="number" id="plane-amount" placeholder="Tiền cược" min="1000" value="10000">
-      </div>
-      <button class="btn-primary" id="btn-plane-start" onclick="startAirplane()">🚀 Cất Cánh</button>
-      <button class="btn-primary" id="btn-plane-cashout" style="display:none; background:linear-gradient(135deg, var(--green), #007e33)" onclick="cashoutAirplane()">🪂 Nhảy Dù (Chốt Lời)</button>
+  <div class="bet-row">
+    <label>Số tiền:</label>
+    <input type="number" id="plane-bet-amount" placeholder="10,000" min="1000" step="1000" value="10000">
+  </div>
+  <div class="quick-amounts">
+    <button class="qa-btn" onclick="setBet('plane',10000)">10K</button>
+    <button class="qa-btn" onclick="setBet('plane',50000)">50K</button>
+    <button class="qa-btn" onclick="setBet('plane',100000)">100K</button>
+  </div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+    <button class="btn-primary" id="plane-start-btn" onclick="startPlane()" style="background:linear-gradient(135deg,#00c851,#007a33)">🚀 BẮT ĐẦU</button>
+    <button class="btn-primary" id="plane-cash-btn" onclick="cashOutPlane()" disabled style="background:linear-gradient(135deg,#f5a623,#c47d00)">💰 RÚT TIỀN</button>
+  </div>
+</div>
+
+<!-- PARACHUTE PAGE -->
+<div class="page" id="page-chupage">
+  <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px">
+    <button onclick="navigate('home')" style="background:none;border:none;color:white;font-size:22px;cursor:pointer">←</button>
+    <h2 style="font-size:18px;font-weight:900">🪂 Nhảy Dù</h2>
+  </div>
+
+  <div class="parachute-area" id="parachute-area">
+    <div class="sky-stars" id="chu-stars"></div>
+    <div class="parachute-jumper" id="chu-jumper" style="top:-60px">🪂</div>
+    <div class="ground-line">🌳🌲🌳🌲🏠🌲🌳</div>
+  </div>
+
+  <div class="parachute-multiplier" id="chu-mult">1.00×</div>
+  <div class="plane-status" id="chu-status">Nhảy dù và đổ bộ đúng lúc!</div>
+
+  <div class="bet-row">
+    <label>Số tiền:</label>
+    <input type="number" id="chu-bet-amount" placeholder="10,000" min="1000" step="1000" value="10000">
+  </div>
+  <div class="quick-amounts">
+    <button class="qa-btn" onclick="setBet('chu',10000)">10K</button>
+    <button class="qa-btn" onclick="setBet('chu',50000)">50K</button>
+    <button class="qa-btn" onclick="setBet('chu',100000)">100K</button>
+  </div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+    <button class="btn-primary" id="chu-start-btn" onclick="startChu()" style="background:linear-gradient(135deg,#00c851,#007a33)">🪂 NHẢY</button>
+    <button class="btn-primary" id="chu-land-btn" onclick="landChu()" disabled style="background:linear-gradient(135deg,#f5a623,#c47d00)">🏁 ĐỔ BỘ</button>
+  </div>
+</div>
+
+<!-- HISTORY PAGE -->
+<div class="page" id="page-historypage">
+  <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px">
+    <button onclick="navigate('home')" style="background:none;border:none;color:white;font-size:22px;cursor:pointer">←</button>
+    <h2 style="font-size:18px;font-weight:900">📋 Lịch Sử</h2>
+  </div>
+
+  <div class="tab-buttons">
+    <button class="tab-btn active" onclick="filterHistory('all',this)">Tất cả</button>
+    <button class="tab-btn" onclick="filterHistory('win',this)">Thắng</button>
+    <button class="tab-btn" onclick="filterHistory('lose',this)">Thua</button>
+  </div>
+
+  <div id="history-list">
+    <div class="empty-state">
+      <div class="es-icon">📭</div>
+      <div>Chưa có lịch sử giao dịch</div>
     </div>
   </div>
 </div>
 
-<div class="page" id="page-parachute">
-  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
-    <div class="section-title" style="margin:0">🪂 Căn Cánh Nhảy Dù</div>
-    <button class="qa-btn" style="padding:4px 10px;font-size:12px" onclick="switchPage('home')">↩ Quay lại</button>
+<!-- PROFILE PAGE -->
+<div class="page" id="page-profilepage">
+  <div style="text-align:center;padding:20px 0 24px">
+    <div style="width:72px;height:72px;background:var(--red);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:900;margin:0 auto 12px">LT</div>
+    <h2 style="font-size:20px;font-weight:900">Lê Thanh Tùng</h2>
+    <p style="color:var(--muted);font-size:13px;margin-top:4px">0971918513</p>
   </div>
-  <div class="parachute-area" id="para-screen">
-    <div class="sky-stars" id="para-stars"></div>
-    <div class="parachute-jumper" id="para-jumper" style="bottom: 200px;">🧍</div>
-    <div class="parachute-ground"></div>
-    <div class="parachute-height" id="para-height-val">Độ cao: 2000m</div>
+
+  <div class="bank-info">
+    <div class="bank-name">Ngân hàng liên kết</div>
+    <div class="bank-account">0971918513</div>
+    <div class="bank-holder">LE THANH TUNG</div>
+    <span class="bank-type">MB BANK</span>
   </div>
-  <div class="plane-multiplier" id="para-mult" style="font-size:36px; margin:8px 0">Tỷ lệ: 1.00x</div>
-  <div class="plane-status" id="para-status">Ấn mở dù ở thời điểm thích hợp!</div>
-  <div class="parachute-instructions">
-    💡 <strong>Luật chơi:</strong> Nhân vật sẽ rơi tự do từ độ cao 2000m. Độ cao giảm dần thì tỷ lệ thưởng càng tăng! Bạn cần bấm <strong>"MỞ DÙ"</strong> trước khi chạm đất. Nếu bấm quá muộn khi đã chạm đất, bạn sẽ thua sạch!
-  </div>
-  <div class="amount-input-group">
-    <span>₫</span>
-    <input type="number" id="para-amount" placeholder="Tiền cược" min="1000" value="10000">
-  </div>
-  <button class="btn-primary" id="btn-para-start" onclick="startParachute()">🪂 Bắt Đầu Rơi</button>
-  <button class="btn-primary" id="btn-para-deploy" style="display:none; background:linear-gradient(135deg, #00cbff, #007ca3)" onclick="deployParachute()">🪂 MỞ DÙ NGAY</button>
+
+  <div class="profile-row"><span class="pr-label">Tổng nạp</span><span class="pr-value" id="pr-deposit">₫0</span></div>
+  <div class="profile-row"><span class="pr-label">Tổng rút</span><span class="pr-value" id="pr-withdraw">₫0</span></div>
+  <div class="profile-row"><span class="pr-label">Ván thắng</span><span class="pr-value" id="pr-wins">0</span></div>
+  <div class="profile-row"><span class="pr-label">Ván thua</span><span class="pr-value" id="pr-losses">0</span></div>
+  <div class="profile-row"><span class="pr-label">Tỷ lệ thắng</span><span class="pr-value" id="pr-rate">0%</span></div>
 </div>
 
-<div class="page" id="page-wheel">
-  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
-    <div class="section-title" style="margin:0">🎡 Vòng Quay May Mắn</div>
-    <button class="qa-btn" style="padding:4px 10px;font-size:12px" onclick="switchPage('home')">↩ Quay lại</button>
-  </div>
-  <div class="game-area" style="text-align:center">
-    <div class="wheel-wrapper">
-      <div class="wheel-pointer">▼</div>
-      <canvas class="wheel-canvas" id="wheel-canvas" width="300" height="300"></canvas>
-    </div>
-    <div class="plane-status" id="wheel-status" style="margin-top:10px">Chi phí: 20,000đ / lượt quay</div>
-
-    <div class="amount-input-group" style="display:none">
-      <input type="number" id="wheel-amount" value="20000">
-    </div>
-    <button class="btn-primary" id="btn-wheel-spin" onclick="spinWheel()">🎡 Quay Ngay (-20K)</button>
-  </div>
-</div>
-
-<div class="page" id="page-history">
-  <div class="section-title">📋 Lịch sử trò chơi</div>
-  <div style="display:flex;gap:6px;margin-bottom:14px">
-    <button class="qa-btn" style="flex:1" onclick="filterHistory('all')">Tất cả</button>
-    <button class="qa-btn" style="flex:1" onclick="filterHistory('win')">Thắng</button>
-    <button class="qa-btn" style="flex:1" onclick="filterHistory('lose')">Thua</button>
-  </div>
-  <div id="history-list"></div>
-</div>
-
+<!-- BOTTOM NAV -->
 <div class="bottom-nav">
-  <div class="nav-item active" id="nav-home" onclick="switchPage('home')">
+  <div class="nav-item active" id="nav-home" onclick="navigate('home')">
     <span class="nav-icon">🏠</span>
-    <span class="nav-label">Trang Chủ</span>
+    <span class="nav-label">Trang chủ</span>
   </div>
-  <div class="nav-item" id="nav-taixiu" onclick="switchPage('taixiu')">
+  <div class="nav-item" id="nav-txpage" onclick="navigate('txpage')">
     <span class="nav-icon">🎲</span>
     <span class="nav-label">Tài Xỉu</span>
   </div>
-  <div class="nav-item" id="nav-history" onclick="switchPage('history')">
-    <span class="nav-icon">📋</span>
-    <span class="nav-label">Lịch Sự</span>
+  <div class="nav-item" id="nav-planepage" onclick="navigate('planepage')">
+    <span class="nav-icon">✈️</span>
+    <span class="nav-label">Máy Bay</span>
+  </div>
+  <div class="nav-item" id="nav-chupage" onclick="navigate('chupage')">
+    <span class="nav-icon">🪂</span>
+    <span class="nav-label">Nhảy Dù</span>
+  </div>
+  <div class="nav-item" id="nav-profilepage" onclick="navigate('profilepage')">
+    <span class="nav-icon">👤</span>
+    <span class="nav-label">Tài khoản</span>
   </div>
 </div>
 
+<!-- DEPOSIT MODAL -->
 <div class="modal-overlay" id="modal-deposit">
   <div class="modal">
-    <div class="modal-title">
-      <span>🏦 Nạp Tiền Chuyển Khoản</span>
-      <button class="modal-close" onclick="closeModal('modal-deposit')">✕</button>
+    <div class="modal-title">💰 Nạp Tiền <button class="modal-close" onclick="closeDepositModal()">✕</button></div>
+
+    <!-- BƯỚC 1: Nhập số tiền -->
+    <div id="deposit-step1">
+      <p style="font-size:13px;color:var(--muted);margin-bottom:16px">Nhập số tiền muốn nạp:</p>
+      <div class="amount-input-group">
+        <span>₫</span>
+        <input type="number" id="deposit-amount" placeholder="100,000" min="10000" step="10000">
+      </div>
+      <div class="quick-amounts">
+        <button class="qa-btn" onclick="setDepAmt(50000)">50K</button>
+        <button class="qa-btn" onclick="setDepAmt(100000)">100K</button>
+        <button class="qa-btn" onclick="setDepAmt(200000)">200K</button>
+        <button class="qa-btn" onclick="setDepAmt(500000)">500K</button>
+        <button class="qa-btn" onclick="setDepAmt(1000000)">1TR</button>
+      </div>
+      <button class="btn-primary" onclick="showDepositQR()">📱 Tạo QR Chuyển Khoản</button>
     </div>
-    <div style="text-align:center; background:rgba(255,255,255,0.03); padding:16px; border-radius:14px; border:1px dashed rgba(255,255,255,0.1); margin-bottom:16px">
-      <p style="font-size:12px;color:var(--muted)">Hệ thống nạp tự động qua SePay</p>
-      <p style="font-size:13px; margin-top:8px">Nội dung chuyển khoản bắt buộc:</p>
-      <p style="font-size:24px; font-weight:900; color:var(--red); letter-spacing:1px; margin:6px 0" id="deposit-content-code">NAP LT001</p>
-      <p style="font-size:11px; color:var(--gold)">⚠️ Sai nội dung sẽ không được cộng tiền tự động!</p>
+
+    <!-- BƯỚC 2: Hiện QR chờ thanh toán -->
+    <div id="deposit-step2" style="display:none;text-align:center">
+      <div style="background:white;border-radius:16px;padding:12px;display:inline-block;margin-bottom:14px">
+        <img id="deposit-qr-img" src="" alt="QR Code" style="width:200px;height:200px;display:block">
+      </div>
+      <div style="background:var(--card2);border-radius:12px;padding:12px 16px;margin-bottom:12px;text-align:left">
+        <div style="font-size:12px;color:var(--muted)">Số tiền</div>
+        <div style="font-size:22px;font-weight:900;color:var(--gold2)" id="deposit-qr-amount"></div>
+        <div style="font-size:12px;color:var(--muted);margin-top:8px">Nội dung chuyển khoản <span style="color:#ff4">(bắt buộc)</span></div>
+        <div style="font-size:16px;font-weight:900;color:white;letter-spacing:1px" id="deposit-qr-content"></div>
+        <div style="font-size:12px;color:var(--muted);margin-top:8px">Tài khoản</div>
+        <div style="font-size:14px;font-weight:800">0971918513 · MB BANK · LE THANH TUNG</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;background:rgba(0,200,81,0.1);border:1px solid rgba(0,200,81,0.3);border-radius:10px;padding:10px 14px;margin-bottom:14px">
+        <span style="font-size:20px">⏳</span>
+        <span style="font-size:13px;color:var(--green);font-weight:700">Đang chờ thanh toán... Tiền sẽ vào ngay sau khi chuyển khoản thành công.</span>
+      </div>
+      <button class="btn-primary" onclick="document.getElementById('deposit-step1').style.display='block';document.getElementById('deposit-step2').style.display='none';stopPolling()" style="background:rgba(255,255,255,0.1)">← Quay lại</button>
     </div>
-    <div style="font-size:14px; line-height:1.6; background:var(--card2); padding:14px; border-radius:12px">
-      <p>🏦 Ngân hàng: <strong>MB Bank (Quân Đội)</strong></p>
-      <p>🔢 Số tài khoản: <strong>0971918513</strong></p>
-      <p>👤 Chủ tài khoản: <strong>LE THANH TUNG</strong></p>
-    </div>
-    <button class="btn-primary" style="margin-top:16px" onclick="closeModal('modal-deposit')">Tôi đã chuyển tiền</button>
   </div>
 </div>
 
+<!-- WITHDRAW MODAL -->
 <div class="modal-overlay" id="modal-withdraw">
   <div class="modal">
-    <div class="modal-title">
-      <span>🏧 Rút Tiền Về MB Bank</span>
-      <button class="modal-close" onclick="closeModal('modal-withdraw')">✕</button>
+    <div class="modal-title">🏧 Rút Tiền <button class="modal-close" onclick="closeModal('modal-withdraw')">✕</button></div>
+    <p style="font-size:13px;color:var(--muted);margin-bottom:16px">Tiền sẽ về tài khoản MB Bank của bạn:</p>
+    <div class="bank-info">
+      <div class="bank-name">Tài khoản nhận</div>
+      <div class="bank-account">0971918513</div>
+      <div class="bank-holder">LE THANH TUNG · MB BANK</div>
     </div>
-    <div class="amount-input-group">
-      <span>🎰</span>
-      <input type="text" id="wd-bank" value="MB Bank" disabled>
-    </div>
-    <div class="amount-input-group">
-      <span>🔢</span>
-      <input type="text" id="wd-acc" value="0971918513" placeholder="Số tài khoản nhận">
+    <div style="text-align:center;margin-bottom:16px">
+      <div style="font-size:12px;color:var(--muted)">Số dư khả dụng</div>
+      <div style="font-size:28px;font-weight:900;color:var(--gold2)" id="withdraw-avail">₫0</div>
     </div>
     <div class="amount-input-group">
       <span>₫</span>
-      <input type="number" id="wd-amount" placeholder="Số tiền cần rút" min="10000">
+      <input type="number" id="withdraw-amount" placeholder="100,000" min="10000" step="10000">
     </div>
-    <p style="font-size:11px;color:var(--muted);margin-bottom:16px">⚠️ Hạn mức rút tối thiểu: 10,000đ. Hệ thống xử lý thủ công trong vòng 5-30 phút.</p>
-    <button class="btn-primary" onclick="submitWithdraw()">📤 Gửi Yêu Cầu Rút</button>
+    <div class="quick-amounts">
+      <button class="qa-btn" onclick="setWdAmt(50000)">50K</button>
+      <button class="qa-btn" onclick="setWdAmt(100000)">100K</button>
+      <button class="qa-btn" onclick="setWdAmt(200000)">200K</button>
+      <button class="qa-btn" onclick="setWdAmt(500000)">500K</button>
+      <button class="qa-btn" onclick="setWdAll()">Tất cả</button>
+    </div>
+    <button class="btn-primary" onclick="doWithdraw()">✅ Xác Nhận Rút</button>
   </div>
 </div>
 
 <script>
-// STATE MANAGEMENT
-const state = {
-  uid: 'LT001',
-  username: 'Lê Thanh Tùng',
-  phone: '0971918513',
-  balance: 500000, 
+// ===== STATE =====
+let state = {
+  balance: 0,
   totalDeposit: 0,
   totalWithdraw: 0,
   wins: 0,
   losses: 0,
-  history: [
-    { game: '🎮 Tài Xỉu', detail: 'Đặt Xỉu ₫20,000', amount: 20000, win: true, time: new Date(Date.now()-60000) },
-    { game: '🚀 Phi Cơ', detail: 'Chốt lời x1.85', amount: 15000, win: true, time: new Date(Date.now()-120000) }
-  ]
+  profit: 0,
+  history: []
 };
 
-let currentFilter = 'all';
-let selectedTxChoice = null;
-
-async function loadUserFromServer() {
-  try {
-    const res = await fetch('/api/user/' + state.uid);
-    const data = await res.json();
-    if (data.success) {
-      state.username = data.user.name;
-      state.phone = data.user.phone;
-      state.balance = data.user.balance;
-      state.totalDeposit = data.user.totalDeposit;
-      state.totalWithdraw = data.user.totalWithdraw;
-      state.wins = data.user.wins;
-      state.losses = data.user.losses;
-      updateUI();
-    }
-  } catch(e) { console.log('Chại chế độ offline/local storage'); }
-}
-
-setInterval(async () => {
-  try {
-    const res = await fetch('/api/notifications/' + state.uid);
-    const data = await res.json();
-    if (data.success && data.notifications.length > 0) {
-      data.notifications.forEach(n => {
-        if (n.type === 'deposit_success') {
-          showToast('🏦 Hệ thống đã nhận ' + fmt(n.amount) + '! Số dư đã cộng.', 'info');
-          loadUserFromServer();
-        }
-      });
-    }
-  } catch(e){}
-}, 4000);
-
-function fmt(n) { return '₫' + Math.abs(parseInt(n)||0).toLocaleString('vi-VN'); }
+// ===== UTILS =====
+const fmt = n => '₫' + Math.abs(n).toLocaleString('vi-VN');
+const fmtSigned = n => (n >= 0 ? '+' : '-') + fmt(n);
 
 function updateUI() {
-  document.getElementById('nav-balance').textContent = fmt(state.balance);
+  document.getElementById('top-balance').textContent = fmt(state.balance);
   document.getElementById('home-balance').textContent = fmt(state.balance);
-  document.getElementById('home-username').textContent = state.username;
-  document.getElementById('home-uid').textContent = 'Mã tài khoản: ' + state.uid;
-  document.getElementById('deposit-content-code').textContent = 'NAP ' + state.uid;
-  document.getElementById('nav-avatar').textContent = (state.username || 'U').charAt(0).toUpperCase();
+  document.getElementById('stat-wins').textContent = state.wins;
+  document.getElementById('stat-losses').textContent = state.losses;
+  const p = state.profit;
+  const pel = document.getElementById('stat-profit');
+  pel.textContent = (p >= 0 ? '+' : '-') + fmt(p);
+  pel.style.color = p >= 0 ? 'var(--green)' : '#ff6666';
+  // profile
+  document.getElementById('pr-deposit').textContent = fmt(state.totalDeposit);
+  document.getElementById('pr-withdraw').textContent = fmt(state.totalWithdraw);
+  document.getElementById('pr-wins').textContent = state.wins;
+  document.getElementById('pr-losses').textContent = state.losses;
+  const total = state.wins + state.losses;
+  document.getElementById('pr-rate').textContent = total ? Math.round(state.wins/total*100)+'%' : '0%';
 }
-
-function switchPage(pageID) {
-  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-
-  const p = document.getElementById('page-' + pageID);
-  if(p) p.classList.add('active');
-
-  const n = document.getElementById('nav-' + pageID);
-  if(n) n.classList.add('active');
-
-  if (pageID === 'history') renderHistory(currentFilter);
-  if (pageID === 'wheel') initWheel();
-}
-
-function openModal(id) { document.getElementById(id).classList.add('open'); }
-function closeModal(id) { document.getElementById(id).classList.remove('open'); }
 
 function showToast(msg, type='info') {
+  const old = document.querySelector('.toast');
+  if (old) old.remove();
   const t = document.createElement('div');
   t.className = 'toast ' + type;
   t.textContent = msg;
   document.body.appendChild(t);
-  setTimeout(() => t.remove(), 2500);
+  setTimeout(() => t.remove(), 2800);
 }
 
-function setTxAmt(a) { document.getElementById('tx-amount').value = parseInt(a); }
-function selectBet(choice) {
-  selectedTxChoice = choice;
-  document.getElementById('btn-choice-tai').classList.remove('selected');
-  document.getElementById('btn-choice-xiu').classList.remove('selected');
-  document.getElementById('btn-choice-' + choice).classList.add('selected');
+function addHistory(game, detail, amount, win) {
+  state.history.unshift({ game, detail, amount, win, time: new Date() });
+  if (win) { state.wins++; state.profit += amount; }
+  else { state.losses++; state.profit -= amount; }
+  updateUI();
+  renderHistory('all');
 }
 
-function playTaiXiu() {
-  const amt = parseInt(document.getElementById('tx-amount').value) || 0;
-  if (!selectedTxChoice) { showToast('Vui lòng chọn Tài hoặc Xỉu!', 'info'); return; }
-  if (amt < 1000) { showToast('Cược tối thiểu 1,000đ', 'info'); return; }
+// ===== NAVIGATION =====
+function navigate(page) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.getElementById('page-' + page).classList.add('active');
+  const ni = document.getElementById('nav-' + page);
+  if (ni) ni.classList.add('active');
+}
+
+// ===== MODALS =====
+function openDeposit() {
+  document.getElementById('modal-deposit').classList.add('open');
+  document.getElementById('deposit-amount').value = '';
+}
+function openWithdraw() {
+  document.getElementById('withdraw-avail').textContent = fmt(state.balance);
+  document.getElementById('modal-withdraw').classList.add('open');
+  document.getElementById('withdraw-amount').value = '';
+}
+function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+function setDepAmt(v) { document.getElementById('deposit-amount').value = v; }
+function setWdAmt(v) { document.getElementById('withdraw-amount').value = v; }
+function setWdAll() { document.getElementById('withdraw-amount').value = state.balance; }
+
+function doDeposit() {
+  const amt = parseInt(document.getElementById('deposit-amount').value) || 0;
+  if (amt < 10000) { showToast('Nạp tối thiểu 10,000đ', 'info'); return; }
+  state.balance += amt;
+  state.totalDeposit += amt;
+  closeModal('modal-deposit');
+  updateUI();
+  showToast('✅ Nạp ' + fmt(amt) + ' thành công!', 'win');
+}
+
+function doWithdraw() {
+  const amt = parseInt(document.getElementById('withdraw-amount').value) || 0;
+  if (amt < 10000) { showToast('Rút tối thiểu 10,000đ', 'info'); return; }
   if (amt > state.balance) { showToast('Số dư không đủ!', 'lose'); return; }
-
   state.balance -= amt;
+  state.totalWithdraw += amt;
+  closeModal('modal-withdraw');
+  updateUI();
+  showToast('🏧 Rút ' + fmt(amt) + ' thành công!', 'info');
+}
+
+// ===== BET HELPER =====
+function setBet(game, amt) {
+  const map = { tx: 'tx-bet-amount', plane: 'plane-bet-amount', chu: 'chu-bet-amount' };
+  document.getElementById(map[game]).value = amt;
+}
+
+// ===== TAI XIU =====
+const DICE_FACES = ['⚀','⚁','⚂','⚃','⚄','⚅'];
+let txChoice = null;
+let txRolling = false;
+
+function selectTX(choice) {
+  txChoice = choice;
+  document.getElementById('tx-tai').classList.toggle('selected', choice === 'tai');
+  document.getElementById('tx-xiu').classList.toggle('selected', choice === 'xiu');
+}
+
+function rollTX() {
+  if (txRolling) return;
+  if (!txChoice) { showToast('Hãy chọn TÀI hoặc XỈU!', 'info'); return; }
+  const bet = parseInt(document.getElementById('tx-bet-amount').value) || 0;
+  if (bet < 1000) { showToast('Đặt cược tối thiểu 1,000đ', 'info'); return; }
+  if (bet > state.balance) { showToast('Số dư không đủ! Hãy nạp tiền.', 'lose'); return; }
+
+  txRolling = true;
+  state.balance -= bet;
   updateUI();
 
   const d1 = document.getElementById('die1');
   const d2 = document.getElementById('die2');
   const d3 = document.getElementById('die3');
-  d1.classList.add('rolling'); d2.classList.add('rolling'); d3.classList.add('rolling');
-  document.getElementById('tx-submit').disabled = true;
+  const dtotal = document.getElementById('dice-total');
+  const dlabel = document.getElementById('tx-result-label');
+  const doutcome = document.getElementById('tx-outcome-box');
+
+  // hide previous result
+  dtotal.style.display = 'none';
+  dlabel.style.display = 'none';
+  doutcome.className = 'result-box';
+
+  // roll animation
+  d1.classList.add('rolling');
+  d2.classList.add('rolling');
+  d3.classList.add('rolling');
+
+  document.getElementById('tx-roll-btn').disabled = true;
+
+  let count = 0;
+  const anim = setInterval(() => {
+    d1.textContent = DICE_FACES[Math.floor(Math.random() * 6)];
+    d2.textContent = DICE_FACES[Math.floor(Math.random() * 6)];
+    d3.textContent = DICE_FACES[Math.floor(Math.random() * 6)];
+    count++;
+    if (count > 15) clearInterval(anim);
+  }, 80);
 
   setTimeout(() => {
-    d1.classList.remove('rolling'); d2.classList.remove('rolling'); d3.classList.remove('rolling');
-    document.getElementById('tx-submit').disabled = false;
-
-    const v1 = Math.floor(Math.random()*6)+1;
-    const v2 = Math.floor(Math.random()*6)+1;
-    const v3 = Math.floor(Math.random()*6)+1;
-    const diceEmojis = ['','⚀','⚁','⚂','⚃','⚄','⚅'];
-    d1.textContent = diceEmojis[v1];
-    d2.textContent = diceEmojis[v2];
-    d3.textContent = diceEmojis[v3];
-
+    clearInterval(anim);
+    const v1 = Math.ceil(Math.random() * 6);
+    const v2 = Math.ceil(Math.random() * 6);
+    const v3 = Math.ceil(Math.random() * 6);
     const total = v1 + v2 + v3;
-    const resultText = total >= 11 ? 'tai' : 'xiu';
 
-    document.getElementById('tx-total').textContent = total;
-    const lbl = document.getElementById('tx-label');
-    lbl.className = 'dice-result-label ' + resultText;
-    lbl.textContent = resultText.toUpperCase();
+    d1.classList.remove('rolling');
+    d2.classList.remove('rolling');
+    d3.classList.remove('rolling');
+    d1.textContent = DICE_FACES[v1-1];
+    d2.textContent = DICE_FACES[v2-1];
+    d3.textContent = DICE_FACES[v3-1];
 
-    const isWin = selectedTxChoice === resultText;
-    let winAmt = 0;
-    if (isWin) {
-      winAmt = Math.floor(amt * 1.98);
+    const isTai = total >= 11;
+    const result = isTai ? 'tai' : 'xiu';
+    const win = result === txChoice;
+
+    dtotal.style.display = 'block';
+    dtotal.textContent = total;
+    dlabel.style.display = 'block';
+    dlabel.textContent = isTai ? 'TÀI' : 'XỈU';
+    dlabel.className = 'dice-result-label ' + result;
+
+    if (win) {
+      const winAmt = bet * 2;
       state.balance += winAmt;
-      state.wins++;
-      showToast('🎉 Thắng +' + fmt(winAmt), 'win');
+      doutcome.textContent = '🎉 THẮNG! +' + fmt(bet);
+      doutcome.className = 'result-box win-result show';
+      showToast('🎉 Thắng ' + fmt(bet) + '!', 'win');
+      addHistory('Tài Xỉu', (isTai ? 'TÀI' : 'XỈU') + ' (tổng: ' + total + ')', bet, true);
     } else {
-      state.losses++;
-      showToast('💥 Thua -' + fmt(amt), 'lose');
+      doutcome.textContent = '😢 THUA! -' + fmt(bet);
+      doutcome.className = 'result-box lose-result show';
+      showToast('😢 Thua ' + fmt(bet), 'lose');
+      addHistory('Tài Xỉu', (isTai ? 'TÀI' : 'XỈU') + ' (tổng: ' + total + ')', bet, false);
     }
 
-    state.history.unshift({
-      game: '🎲 Tài Xỉu',
-      detail: 'Đặt ' + (selectedTxChoice==='tai'?'Tài':'Xỉu') + ' [' + v1 + ',' + v2 + ',' + v3 + ']',
-      amount: isWin ? winAmt : amt,
-      win: isWin,
-      time: new Date()
-    });
     updateUI();
-    syncBalanceWithServer();
-  }, 1200);
+    document.getElementById('tx-roll-btn').disabled = false;
+    txRolling = false;
+    txChoice = null;
+    document.getElementById('tx-tai').classList.remove('selected');
+    document.getElementById('tx-xiu').classList.remove('selected');
+  }, 1400);
 }
 
+// ===== AIRPLANE =====
 let planeInterval = null;
-let planeMultiplier = 1.0;
-let planeBetAmount = 0;
-let isPlayingPlane = false;
+let planeMult = 1.0;
+let planeBet = 0;
+let planeRunning = false;
+let planeCrashAt = 1.0;
+let planePosX = 0, planePosY = 0;
 
-function startAirplane() {
-  const amt = parseInt(document.getElementById('plane-amount').value) || 0;
-  if (amt < 1000) { showToast('Cược tối thiểu 1,000đ', 'info'); return; }
-  if (amt > state.balance) { showToast('Số dư không đủ!', 'lose'); return; }
+function generateCrashPoint() {
+  // House edge ~5%, exponential distribution
+  const r = Math.random();
+  if (r < 0.03) return 1.0 + Math.random() * 0.5;
+  return Math.max(1.01, 0.99 / (1 - Math.random()));
+}
 
-  state.balance -= amt;
-  planeBetAmount = amt;
-  isPlayingPlane = true;
-  planeMultiplier = 1.0;
+function startPlane() {
+  const bet = parseInt(document.getElementById('plane-bet-amount').value) || 0;
+  if (bet < 1000) { showToast('Đặt cược tối thiểu 1,000đ', 'info'); return; }
+  if (bet > state.balance) { showToast('Số dư không đủ! Hãy nạp tiền.', 'lose'); return; }
+  if (planeRunning) return;
+
+  planeBet = bet;
+  state.balance -= bet;
   updateUI();
+  planeRunning = true;
+  planeMult = 1.0;
+  planeCrashAt = generateCrashPoint();
+  planePosX = 0; planePosY = 0;
 
-  document.getElementById('btn-plane-start').style.display = 'none';
-  document.getElementById('btn-plane-cashout').style.display = 'block';
-  document.getElementById('plane-mult').classList.remove('danger');
-  document.getElementById('plane-mult').textContent = '1.00x';
-  document.getElementById('plane-status').textContent = '🛫 Phi cơ đang cất cánh...';
+  const graph = document.getElementById('plane-graph');
+  const plane = document.getElementById('plane-emoji');
+  const trail = document.getElementById('plane-trail');
+  const crashed = document.getElementById('plane-crashed');
+  const multEl = document.getElementById('plane-mult');
+  const statusEl = document.getElementById('plane-status');
 
-  const jumper = document.getElementById('plane-jumper');
-  jumper.style.bottom = '10px'; jumper.style.left = '10px';
-  jumper.textContent = '🚀';
+  crashed.style.display = 'none';
+  plane.style.display = 'block';
+  plane.style.bottom = '20px';
+  plane.style.left = '20px';
+  trail.style.width = '0%';
+  multEl.className = 'plane-multiplier';
 
-  document.getElementById('plane-crash-overlay').className = '';
-
-  const crashPoint = (Math.random() * 5 + 1.1) + (Math.random() < 0.15 ? Math.random()*10 : 0);
+  document.getElementById('plane-start-btn').disabled = true;
+  document.getElementById('plane-cash-btn').disabled = false;
+  statusEl.textContent = '✈️ Máy bay đang bay... Rút tiền đúng lúc!';
 
   planeInterval = setInterval(() => {
-    planeMultiplier += 0.04 * (planeMultiplier * 0.4);
-    document.getElementById('plane-mult').textContent = planeMultiplier.toFixed(2) + 'x';
+    planeMult += 0.02 + planeMult * 0.005;
 
-    let progress = Math.min((planeMultiplier - 1) / 5, 1);
-    jumper.style.bottom = (10 + progress * 100) + 'px';
-    jumper.style.left = (10 + progress * 260) + 'px';
+    const progress = Math.min((planeMult - 1) / (planeCrashAt - 1), 1);
+    const graphH = graph.offsetHeight - 50;
+    const graphW = graph.offsetWidth - 60;
 
-    if (planeMultiplier >= crashPoint) {
+    planePosX = Math.min(progress * graphW + 20, graphW + 10);
+    planePosY = Math.min(progress * graphH, graphH);
+
+    plane.style.left = planePosX + 'px';
+    plane.style.bottom = (20 + planePosY) + 'px';
+    trail.style.width = Math.min(progress * 100, 100) + '%';
+    multEl.textContent = planeMult.toFixed(2) + '×';
+
+    if (planeMult > planeCrashAt * 0.8) multEl.classList.add('danger');
+
+    if (planeMult >= planeCrashAt) {
       clearInterval(planeInterval);
-      isPlayingPlane = false;
-      document.getElementById('btn-plane-start').style.display = 'block';
-      document.getElementById('btn-plane-cashout').style.display = 'none';
-      document.getElementById('plane-mult').classList.add('danger');
-      document.getElementById('plane-mult').textContent = 'CRASHED @ ' + planeMultiplier.toFixed(2) + 'x';
-      document.getElementById('plane-status').textContent = '💥 Máy bay phát nổ!';
-      jumper.textContent = '💥';
-      showToast('💥 Phi cơ nổ tung! Bạn mất ' + fmt(planeBetAmount), 'lose');
-
-      state.history.unshift({ game: '🚀 Phi Cơ', detail: 'Nổ máy bay @ ' + planeMultiplier.toFixed(2) + 'x', amount: planeBetAmount, win: false, time: new Date() });
-      state.losses++;
-      syncBalanceWithServer();
+      planeRunning = false;
+      plane.style.display = 'none';
+      crashed.style.display = 'flex';
+      multEl.textContent = '💥 ' + planeCrashAt.toFixed(2) + '×';
+      multEl.classList.add('danger');
+      statusEl.textContent = '💥 Máy bay nổ tại ' + planeCrashAt.toFixed(2) + '×! Bạn đã thua!';
+      document.getElementById('plane-start-btn').disabled = false;
+      document.getElementById('plane-cash-btn').disabled = true;
+      showToast('💥 Máy bay nổ! Thua ' + fmt(planeBet), 'lose');
+      addHistory('Máy Bay', 'Nổ tại ' + planeCrashAt.toFixed(2) + '×', planeBet, false);
+      updateUI();
     }
   }, 100);
 }
 
-function cashoutAirplane() {
-  if (!isPlayingPlane) return;
+function cashOutPlane() {
+  if (!planeRunning) return;
   clearInterval(planeInterval);
-  isPlayingPlane = false;
+  planeRunning = false;
 
-  const winAmt = Math.floor(planeBetAmount * planeMultiplier);
+  const winAmt = Math.floor(planeBet * planeMult);
   state.balance += winAmt;
   updateUI();
 
-  document.getElementById('btn-plane-start').style.display = 'block';
-  document.getElementById('btn-plane-cashout').style.display = 'none';
-  document.getElementById('plane-status').textContent = '🪂 Bạn đã nhảy dù thành công ở ' + planeMultiplier.toFixed(2) + 'x';
+  document.getElementById('plane-status').textContent = '💰 Rút thành công tại ' + planeMult.toFixed(2) + '×! Nhận ' + fmt(winAmt);
+  document.getElementById('plane-cash-btn').disabled = true;
+  document.getElementById('plane-start-btn').disabled = false;
+  document.getElementById('plane-mult').classList.remove('danger');
 
-  showToast('🎉 Chốt lời thành công +' + fmt(winAmt), 'win');
-  state.history.unshift({ game: '🚀 Phi Cơ', detail: 'Nhảy dù thành công x' + planeMultiplier.toFixed(2), amount: winAmt, win: true, time: new Date() });
-  state.wins++;
-  syncBalanceWithServer();
+  const profit = winAmt - planeBet;
+  showToast('💰 Rút tại ' + planeMult.toFixed(2) + '×! +' + fmt(profit), 'win');
+  addHistory('Máy Bay', 'Rút tại ' + planeMult.toFixed(2) + '×', profit, true);
 }
 
-let paraInterval = null;
-let paraHeight = 2000;
-let paraBetAmount = 0;
-let isFalling = false;
-let isParaDeployed = false;
+// ===== PARACHUTE =====
+let chuInterval = null;
+let chuMult = 1.0;
+let chuBet = 0;
+let chuRunning = false;
+let chuCrashAt = 1.0;
+let chuJumped = false;
 
-function startParachute() {
-  const amt = parseInt(document.getElementById('para-amount').value) || 0;
-  if (amt < 1000) { showToast('Cược tối thiểu 1,000đ', 'info'); return; }
-  if (amt > state.balance) { showToast('Số dư không đủ!', 'lose'); return; }
-
-  state.balance -= amt;
-  paraBetAmount = amt;
-  isFalling = true;
-  isParaDeployed = false;
-  paraHeight = 2000;
-  updateUI();
-
-  document.getElementById('btn-para-start').style.display = 'none';
-  document.getElementById('btn-para-deploy').style.display = 'block';
-  document.getElementById('para-mult').textContent = 'Tỷ lệ: 1.00x';
-  document.getElementById('para-status').textContent = '🧍 Nhân vật đang rơi tự do...';
-
-  const jumper = document.getElementById('para-jumper');
-  jumper.style.bottom = '180px';
-  jumper.textContent = '🧍';
-
-  paraInterval = setInterval(() => {
-    let fallSpeed = isParaDeployed ? 25 : 65;
-    paraHeight -= fallSpeed;
-    if (paraHeight < 0) paraHeight = 0;
-
-    document.getElementById('para-height-val').textContent = 'Độ cao: ' + paraHeight + 'm';
-
-    let currentMult = 1.0 + ((2000 - paraHeight) / 500);
-    if (!isParaDeployed) currentMult *= 1.2; 
-    document.getElementById('para-mult').textContent = 'Tỷ lệ: ' + currentMult.toFixed(2) + 'x';
-
-    jumper.style.bottom = (30 + (paraHeight / 2000) * 150) + 'px';
-
-    if (paraHeight === 0) {
-      clearInterval(paraInterval);
-      isFalling = false;
-      document.getElementById('btn-para-start').style.display = 'block';
-      document.getElementById('btn-para-deploy').style.display = 'none';
-
-      if (isParaDeployed) {
-        const finalMult = currentMult;
-        const winAmt = Math.floor(paraBetAmount * finalMult);
-        state.balance += winAmt;
-        updateUI();
-        document.getElementById('para-status').textContent = '🟩 Tiếp đất an toàn! Hệ số x' + finalMult.toFixed(2);
-        showToast('🎉 Landing an toàn +' + fmt(winAmt), 'win');
-        state.history.unshift({ game: '🪂 Nhảy Dù', detail: 'Đáp đất an toàn x' + finalMult.toFixed(2), amount: winAmt, win: true, time: new Date() });
-        state.wins++;
-      } else {
-        document.getElementById('para-status').textContent = '💥 Chạm đất quá mạnh! Thua cuộc.';
-        jumper.textContent = '💥';
-        showToast('💥 Chưa mở dù đã chạm đất! -' + fmt(paraBetAmount), 'lose');
-        state.history.unshift({ game: '🪂 Nhảy Dù', detail: 'Rơi tự do chạm đất ngã tử vong', amount: paraBetAmount, win: false, time: new Date() });
-        state.losses++;
-      }
-      syncBalanceWithServer();
-    }
-  }, 150);
-}
-
-function deployParachute() {
-  if (!isFalling || isParaDeployed) return;
-  isParaDeployed = true;
-  document.getElementById('para-status').textContent = '🪂 Đã mở dù! Đang giảm tốc đáp đất...';
-  document.getElementById('para-jumper').textContent = '🪂';
-  document.getElementById('btn-para-deploy').disabled = true;
-  setTimeout(() => { document.getElementById('btn-para-deploy').style.display = 'none'; document.getElementById('btn-para-deploy').disabled = false; }, 200);
-}
-
-const wheelColors = ['#d0021b', '#16161e', '#f5a623', '#2196f3', '#00c851', '#7b0010', '#ffd700', '#444444'];
-const wheelLabels = ['Mất lượt', 'Thưởng 5K', 'X2 Tiền Cược', 'Thưởng 20K', 'May mắn +50K', 'Chia đôi', ' Jackpot 200K', 'Thưởng 10K'];
-
-function initWheel() {
-  const canvas = document.getElementById('wheel-canvas');
-  if(!canvas) return;
-  const ctx = canvas.getContext('2d');
-  ctx.clearRect(0,0,300,300);
-  const arc = Math.PI / (wheelLabels.length / 2);
-
-  for (let i = 0; i < wheelLabels.length; i++) {
-    const angle = i * arc;
-    ctx.fillStyle = wheelColors[i];
-    ctx.beginPath();
-    ctx.arc(150, 150, 140, angle, angle + arc, false);
-    ctx.lineTo(150, 150);
-    ctx.fill();
-
-    ctx.save();
-    ctx.fillStyle = '#fff';
-    ctx.font = 'bold 11px sans-serif';
-    ctx.translate(150, 150);
-    ctx.rotate(angle + arc / 2);
-    ctx.textAlign = 'right';
-    ctx.fillText(wheelLabels[i], 130, 5);
-    ctx.restore();
+// Create stars
+function makeStars(containerId, count=20) {
+  const c = document.getElementById(containerId);
+  c.innerHTML = '';
+  for (let i = 0; i < count; i++) {
+    const s = document.createElement('div');
+    s.className = 'star';
+    s.style.cssText = \`
+      width:\${1+Math.random()*2}px;
+      height:\${1+Math.random()*2}px;
+      left:\${Math.random()*100}%;
+      top:\${Math.random()*60}%;
+      animation-delay:\${Math.random()*2}s
+    \`;
+    c.appendChild(s);
   }
 }
+makeStars('plane-stars', 15);
+makeStars('chu-stars', 20);
 
-let isSpinning = false;
-function spinWheel() {
-  if (isSpinning) return;
-  const cost = 20000;
-  if (state.balance < cost) { showToast('Số dư không đủ 20,000đ để quay!', 'lose'); return; }
+function startChu() {
+  const bet = parseInt(document.getElementById('chu-bet-amount').value) || 0;
+  if (bet < 1000) { showToast('Đặt cược tối thiểu 1,000đ', 'info'); return; }
+  if (bet > state.balance) { showToast('Số dư không đủ! Hãy nạp tiền.', 'lose'); return; }
+  if (chuRunning) return;
 
-  state.balance -= cost;
-  isSpinning = true;
+  chuBet = bet;
+  state.balance -= bet;
   updateUI();
+  chuRunning = true;
+  chuJumped = true;
+  chuMult = 1.0;
+  chuCrashAt = generateCrashPoint();
 
-  const canvas = document.getElementById('wheel-canvas');
-  const randomDeg = Math.floor(Math.random() * 360) + 2880; 
-  canvas.style.transform = 'rotate(' + randomDeg + 'deg)';
+  const jumper = document.getElementById('chu-jumper');
+  const multEl = document.getElementById('chu-mult');
+  const statusEl = document.getElementById('chu-status');
 
-  document.getElementById('btn-wheel-spin').disabled = true;
-  document.getElementById('wheel-status').textContent = '🎡 Vòng quay đang đảo nhanh...';
+  jumper.style.top = '10px';
+  jumper.textContent = '🪂';
+  multEl.textContent = '1.00×';
+  multEl.style.color = 'var(--gold2)';
 
-  setTimeout(() => {
-    isSpinning = false;
-    document.getElementById('btn-wheel-spin').disabled = false;
+  document.getElementById('chu-start-btn').disabled = true;
+  document.getElementById('chu-land-btn').disabled = false;
+  statusEl.textContent = '🪂 Đang rơi... Nhấn ĐỔ BỘ để hạ cánh an toàn!';
 
-    const actualDeg = randomDeg % 360;
-    const prizeIndex = Math.floor(((360 - actualDeg + 270) % 360) / (360 / wheelLabels.length));
-    const prizeText = wheelLabels[prizeIndex];
+  chuInterval = setInterval(() => {
+    chuMult += 0.015 + chuMult * 0.003;
+    multEl.textContent = chuMult.toFixed(2) + '×';
 
-    document.getElementById('wheel-status').textContent = '🎁 Kết quả: ' + prizeText;
+    // Move jumper down
+    const currentTop = parseFloat(jumper.style.top) || 10;
+    const targetTop = 140;
+    const progress = Math.min((chuMult - 1) / (chuCrashAt - 1), 1);
+    jumper.style.top = Math.min(10 + progress * targetTop, targetTop + 20) + 'px';
 
-    let winAmt = 0;
-    let detailMsg = 'Quay vòng quay: ' + prizeText;
-    let isWin = true;
+    if (chuMult > chuCrashAt * 0.75) multEl.style.color = '#ff4444';
 
-    if (prizeText.includes('5K')) winAmt = 5000;
-    else if (prizeText.includes('10K')) winAmt = 10000;
-    else if (prizeText.includes('20K')) winAmt = 20000;
-    else if (prizeText.includes('50K')) winAmt = 50000;
-    else if (prizeText.includes('200K')) winAmt = 200000;
-    else if (prizeText.includes('X2')) winAmt = cost * 2;
-    else if (prizeText.includes('Chia đôi')) winAmt = cost / 2;
-    else { winAmt = 0; isWin = false; } 
-
-    state.balance += winAmt;
-    if (winAmt > cost) { showToast('🎉 Trúng thưởng lớn: ' + prizeText, 'win'); state.wins++; }
-    else if (winAmt === cost) { showToast('🤝 Huề vốn: ' + prizeText, 'info'); }
-    else { showToast('💥 May mắn lần sau: ' + prizeText, 'lose'); state.losses++; }
-
-    state.history.unshift({ game: '🎡 Vòng Quay', detail: detailMsg, amount: winAmt, win: isWin, time: new Date() });
-    updateUI();
-    syncBalanceWithServer();
-  }, 4000);
+    if (chuMult >= chuCrashAt) {
+      clearInterval(chuInterval);
+      chuRunning = false;
+      jumper.textContent = '💥';
+      multEl.textContent = '💥 ' + chuCrashAt.toFixed(2) + '×';
+      multEl.style.color = '#ff4444';
+      statusEl.textContent = '💥 Dù bị rách tại ' + chuCrashAt.toFixed(2) + '×! Bạn đã thua!';
+      document.getElementById('chu-start-btn').disabled = false;
+      document.getElementById('chu-land-btn').disabled = true;
+      showToast('💥 Dù bị rách! Thua ' + fmt(chuBet), 'lose');
+      addHistory('Nhảy Dù', 'Dù rách tại ' + chuCrashAt.toFixed(2) + '×', chuBet, false);
+      updateUI();
+    }
+  }, 100);
 }
 
+function landChu() {
+  if (!chuRunning) return;
+  clearInterval(chuInterval);
+  chuRunning = false;
+
+  const winAmt = Math.floor(chuBet * chuMult);
+  state.balance += winAmt;
+  updateUI();
+
+  const jumper = document.getElementById('chu-jumper');
+  jumper.style.top = '140px';
+  jumper.textContent = '🏃';
+
+  document.getElementById('chu-status').textContent = '✅ Hạ cánh an toàn tại ' + chuMult.toFixed(2) + '×! Nhận ' + fmt(winAmt);
+  document.getElementById('chu-land-btn').disabled = true;
+  document.getElementById('chu-start-btn').disabled = false;
+  document.getElementById('chu-mult').style.color = 'var(--green)';
+
+  const profit = winAmt - chuBet;
+  showToast('✅ Đổ bộ thành công! +' + fmt(profit), 'win');
+  addHistory('Nhảy Dù', 'Đổ bộ tại ' + chuMult.toFixed(2) + '×', profit, true);
+}
+
+// ===== HISTORY =====
+let currentFilter = 'all';
+
 function renderHistory(filter) {
+  currentFilter = filter;
   const list = document.getElementById('history-list');
-  list.innerHTML = '';
+  let items = state.history;
+  if (filter === 'win') items = items.filter(h => h.win);
+  if (filter === 'lose') items = items.filter(h => !h.win);
 
-  let filtered = state.history;
-  if (filter === 'win') filtered = state.history.filter(h => h.win);
-  if (filter === 'lose') filtered = state.history.filter(h => !h.win);
-
-  if (!filtered.length) {
-    list.innerHTML = '<p style="text-align:center;color:var(--muted);font-size:13px;padding:20px">Chưa có lịch sử giao dịch nào.</p>';
+  if (!items.length) {
+    list.innerHTML = '<div class="empty-state"><div class="es-icon">📭</div><div>Không có kết quả</div></div>';
     return;
   }
 
-  filtered.forEach(h => {
-    const div = document.createElement('div');
-    div.className = 'history-item ' + (h.win ? 'win' : 'lose');
-    div.innerHTML = `
+  list.innerHTML = items.map(h => \`
+    <div class="history-item \${h.win ? 'win' : 'lose'}">
       <div class="hi-left">
-        <div class="hi-game">${h.game}</div>
-        <div class="hi-detail">${h.detail}</div>
+        <div class="hi-game">\${h.game}</div>
+        <div class="hi-detail">\${h.detail}</div>
       </div>
-      <div class="hi-amount ${h.win ? 'win' : 'lose'}">${h.win ? '+' : '-'}${fmt(h.amount)}</div>
-    `;
-    list.appendChild(div);
-  });
+      <div class="hi-amount \${h.win ? 'win' : 'lose'}">\${h.win ? '+' : '-'}\${fmt(Math.abs(h.amount))}</div>
+    </div>
+  \`).join('');
 }
 
-function filterHistory(type) { renderHistory(type); }
+function filterHistory(filter, btn) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderHistory(filter);
+}
 
-async function submitWithdraw() {
-  const bank = document.getElementById('wd-bank').value;
-  const acc = document.getElementById('wd-acc').value;
-  const amt = parseInt(document.getElementById('wd-amount').value) || 0;
+// ===== CLOSE MODALS ON OUTSIDE CLICK =====
+document.querySelectorAll('.modal-overlay').forEach(mo => {
+  mo.addEventListener('click', e => {
+    if (e.target === mo) mo.classList.remove('open');
+  });
+});
 
-  if (!acc) { showToast('Nhập số tài khoản nhận!', 'lose'); return; }
-  if (amt < 10000) { showToast('Số tiền rút tối thiểu 10,000đ!', 'lose'); return; }
+// =============================================
+// BACKEND API INTEGRATION
+// =============================================
+const USER_ID = 'LT001'; // ID user đang đăng nhập
+const API_BASE = ''; // Để trống nếu cùng domain, hoặc 'http://yourdomain.com'
+
+// Load số dư từ server khi mở app
+async function loadUserFromServer() {
+  try {
+    const res = await fetch(\`\${API_BASE}/api/user/\${USER_ID}\`);
+    const data = await res.json();
+    if (data.success) {
+      state.balance = data.user.balance;
+      state.wins = data.user.wins;
+      state.losses = data.user.losses;
+      state.totalDeposit = data.user.totalDeposit;
+      state.totalWithdraw = data.user.totalWithdraw;
+      updateUI();
+    }
+  } catch (e) {
+    console.log('Offline mode - dùng local state');
+  }
+}
+
+// =============================================
+// POLLING: Check giao dịch nạp tiền mới từ SePay
+// Gọi mỗi 3 giây khi modal nạp tiền đang mở
+// =============================================
+let pollingInterval = null;
+
+function startPolling() {
+  if (pollingInterval) return;
+  pollingInterval = setInterval(async () => {
+    try {
+      const res = await fetch(\`\${API_BASE}/api/notifications/\${USER_ID}\`);
+      const data = await res.json();
+      if (data.success && data.notifications.length > 0) {
+        for (const notif of data.notifications) {
+          if (notif.type === 'deposit_success') {
+            state.balance += notif.amount;
+            state.totalDeposit += notif.amount;
+            updateUI();
+            closeModal('modal-deposit');
+            showToast('✅ Nạp ' + fmt(notif.amount) + ' thành công!', 'win');
+            // Thêm vào lịch sử local
+            state.history.unshift({
+              game: '💰 Nạp tiền',
+              detail: 'Chuyển khoản MB Bank',
+              amount: notif.amount,
+              win: true,
+              time: new Date()
+            });
+            renderHistory(currentFilter);
+          }
+        }
+      }
+    } catch (e) { /* offline */ }
+  }, 3000);
+}
+
+function stopPolling() {
+  if (pollingInterval) {
+    clearInterval(pollingInterval);
+    pollingInterval = null;
+  }
+}
+
+// =============================================
+// OVERRIDE: Nạp tiền - hiển thị QR + chờ thật
+// =============================================
+function openDeposit() {
+  document.getElementById('modal-deposit').classList.add('open');
+  document.getElementById('deposit-amount').value = '';
+  document.getElementById('deposit-step1').style.display = 'block';
+  document.getElementById('deposit-step2').style.display = 'none';
+}
+
+function showDepositQR() {
+  const amt = parseInt(document.getElementById('deposit-amount').value) || 0;
+  if (amt < 10000) { showToast('Nạp tối thiểu 10,000đ', 'info'); return; }
+
+  // Tạo nội dung chuyển khoản kèm userID
+  const transferContent = \`NAP \${USER_ID}\`;
+  const qrUrl = \`https://img.vietqr.io/image/MB-0971918513-compact2.jpg?amount=\${amt}&addInfo=\${encodeURIComponent(transferContent)}&accountName=LE%20THANH%20TUNG\`;
+
+  document.getElementById('deposit-qr-img').src = qrUrl;
+  document.getElementById('deposit-qr-amount').textContent = fmt(amt);
+  document.getElementById('deposit-qr-content').textContent = transferContent;
+  document.getElementById('deposit-step1').style.display = 'none';
+  document.getElementById('deposit-step2').style.display = 'block';
+
+  // Bắt đầu polling chờ webhook
+  startPolling();
+  showToast('📱 Quét QR để chuyển khoản...', 'info');
+}
+
+function closeDepositModal() {
+  closeModal('modal-deposit');
+  stopPolling();
+}
+
+// =============================================
+// OVERRIDE: Rút tiền - gọi API backend
+// =============================================
+async function doWithdraw() {
+  const amt = parseInt(document.getElementById('withdraw-amount').value) || 0;
+  if (amt < 10000) { showToast('Rút tối thiểu 10,000đ', 'info'); return; }
+  if (amt > state.balance) { showToast('Số dư không đủ!', 'lose'); return; }
 
   try {
-    const res = await fetch('/api/withdraw', {
+    const res = await fetch(\`\${API_BASE}/api/withdraw\`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ userID: state.uid, amount: amt })
+      body: JSON.stringify({ userID: USER_ID, amount: amt })
     });
     const data = await res.json();
 
@@ -1499,6 +1884,7 @@ async function submitWithdraw() {
       showToast(data.message || 'Lỗi rút tiền', 'lose');
     }
   } catch (e) {
+    // Offline fallback
     if (amt > state.balance) { showToast('Số dư không đủ!', 'lose'); return; }
     state.balance -= amt;
     state.totalWithdraw += amt;
@@ -1508,16 +1894,7 @@ async function submitWithdraw() {
   }
 }
 
-async function syncBalanceWithServer() {
-  try {
-    await fetch('/admin/setbalance', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'x-admin-pass': 'tungdeptraivip' },
-      body: JSON.stringify({ userID: state.uid, amount: state.balance, note: 'Game Auto Sync' })
-    });
-  } catch(e){}
-}
-
+// Init
 loadUserFromServer();
 updateUI();
 </script>
@@ -1528,10 +1905,14 @@ updateUI();
 app.get('/', (req, res) => res.send(HTML));
 app.get('/index.html', (req, res) => res.send(HTML));
 
-const port = process.env.PORT || CONFIG.PORT || 3000;
-app.listen(port, () => {
+app.listen(CONFIG.PORT, () => {
   console.log('');
   console.log('╔══════════════════════════════════════════╗');
-  console.log('║   MB Game Server đang chạy tại port ' + port + ' ║');
+  console.log('║   MB Game Server đang chạy!             ║');
+  console.log('║   http://localhost:' + CONFIG.PORT + '               ║');
+  console.log('╠══════════════════════════════════════════╣');
+  console.log('║   Webhook SePay: POST /webhook/sepay    ║');
+  console.log('║   ⚠️  Nhớ sửa SEPAY_API_KEY trước!      ║');
   console.log('╚══════════════════════════════════════════╝');
+  console.log('');
 });
