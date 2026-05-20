@@ -1,0 +1,12 @@
+{
+  "name": "mb-game",
+  "version": "1.0.0",
+  "description": "Game Web Server",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
